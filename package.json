@@ -7,7 +7,10 @@
         "test": "ava",
         "build": "tsc",
         "start": "node dist/server.js",
-        "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' -T src/server.ts"
+        "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' -T src/server.ts",
+        "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
+        "m:run": "npm run typeorm migration:run",
+        "m:generate": "npm run typeorm migration:generate -- -n"
     },
     "repository": {
         "type": "git",
