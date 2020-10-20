@@ -4,7 +4,8 @@
     "description": "NodeJS project boilerplate",
     "main": "dist/server.js",
     "scripts": {
-        "test": "ava"
+        "test": "ava",
+        "build": "tsc"
     },
     "repository": {
         "type": "git",
@@ -22,5 +23,8 @@
     "bugs": {
         "url": "https://github.com/seidor-cloud-produtos/node-project-boilerplate/issues"
     },
-    "homepage": "https://github.com/seidor-cloud-produtos/node-project-boilerplate#readme"
+    "homepage": "https://github.com/seidor-cloud-produtos/node-project-boilerplate#readme",
+    "devDependencies": {
+        "typescript": "^4.0.3"
+    }
 }
