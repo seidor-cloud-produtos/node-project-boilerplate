@@ -6,7 +6,8 @@
     "scripts": {
         "test": "ava",
         "build": "tsc",
-        "start": "node dist/server.js"
+        "start": "node dist/server.js",
+        "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' -T src/server.ts"
     },
     "repository": {
         "type": "git",
@@ -31,6 +32,7 @@
         "@types/sinon": "^9.0.8",
         "@types/supertest": "^2.0.10",
         "ava": "^3.13.0",
+        "nodemon": "^2.0.6",
         "pre-push": "^0.1.1",
         "sinon": "^9.2.0",
         "supertest": "^5.0.0",
