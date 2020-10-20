@@ -83,3 +83,31 @@ testBD('User Create Error Required Fields', async t => {
 
     await Promise.all(promises);
 });
+
+testBD('User GetById', async t => {
+    const data = new UserBuilder()
+        .withName('foo')
+        .withSurname('bar')
+        .withAge(42)
+        .withEmail('foo@bar.com')
+        .build();
+
+    const created = await repository.create(data as UserInterface);
+    const retrievedUser = await repository.getById(created.id!);
+
+    t.truthy(retrievedUser!.id);
+    t.is(retrievedUser!.name, data.name);
+    t.is(retrievedUser!.surname, data.surname);
+    t.is(retrievedUser!.age, data.age);
+    t.is(retrievedUser!.email, data.email);
+
+    t.context.removable.push(created);
+});
+
+testBD('User GetById Not Found', async t => {
+    const retrievedUser = await repository.getById(
+        '55049aa3-8c0a-43c6-9453-09f6b9567f46',
+    );
+
+    t.falsy(retrievedUser);
+});
