@@ -133,3 +133,47 @@ testBD('User GetAll', async t => {
     t.context.removable.push(created1);
     t.context.removable.push(created2);
 });
+
+testBD('User Update', async t => {
+    const createData = new UserBuilder()
+        .withName('foo')
+        .withSurname('bar')
+        .withAge(42)
+        .withEmail('foo@bar.com')
+        .build();
+
+    const created = await repository.create(createData as UserInterface);
+
+    const data = new UserBuilder()
+        .withName('foo1')
+        .withSurname('bar1')
+        .withAge(421)
+        .withEmail('foo@bar.com1')
+        .build();
+
+    const updated = await repository.update(data, created.id!);
+
+    t.truthy(created.id);
+    t.is(updated.name, data.name);
+    t.is(updated.surname, data.surname);
+    t.is(updated.age, data.age);
+    t.is(updated.email, data.email);
+
+    t.context.removable.push(created);
+});
+
+testBD('User Update Not Found', async t => {
+    const data = new UserBuilder()
+        .withName('foo1')
+        .withSurname('bar1')
+        .withAge(421)
+        .withEmail('foo@bar.com1')
+        .build();
+
+    const updated = await repository.update(
+        data,
+        '55049aa3-8c0a-43c6-9453-09f6b9567f46',
+    );
+
+    t.falsy(updated);
+});
