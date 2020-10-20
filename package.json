@@ -1,0 +1,26 @@
+{
+    "name": "project-boilerplate",
+    "version": "1.0.0",
+    "description": "NodeJS project boilerplate",
+    "main": "dist/server.js",
+    "scripts": {
+        "test": "ava"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/seidor-cloud-produtos/node-project-boilerplate.git"
+    },
+    "keywords": [
+        "NodeJS",
+        "Boilerplate",
+        "Typescript",
+        "TypeORM",
+        "Mongoose"
+    ],
+    "author": "Andre Macedo",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/seidor-cloud-produtos/node-project-boilerplate/issues"
+    },
+    "homepage": "https://github.com/seidor-cloud-produtos/node-project-boilerplate#readme"
+}
