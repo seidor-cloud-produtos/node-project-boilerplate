@@ -111,3 +111,25 @@ testBD('User GetById Not Found', async t => {
 
     t.falsy(retrievedUser);
 });
+
+testBD('User GetAll', async t => {
+    const data = new UserBuilder()
+        .withName('foo')
+        .withSurname('bar')
+        .withAge(42)
+        .withEmail('foo@bar.com')
+        .build();
+
+    const created1 = await repository.create(data as UserInterface);
+    const created2 = await repository.create(data as UserInterface);
+    const users = await repository.getAll();
+
+    const filter1 = users.data.filter(user => user.id === created1.id);
+    t.is(filter1.length, 1);
+
+    const filter2 = users.data.filter(user => user.id === created2.id);
+    t.is(filter2.length, 1);
+
+    t.context.removable.push(created1);
+    t.context.removable.push(created2);
+});

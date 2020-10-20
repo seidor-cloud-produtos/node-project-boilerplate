@@ -18,7 +18,7 @@ export const getById = async (id: string): Promise<User | undefined> => {
 };
 
 export const getAll = async (
-    options: FindManyOptions,
+    options?: FindManyOptions,
 ): Promise<{ data: UserInterface[]; count: number }> => {
     const [data, count] = await getRepository(User).findAndCount(options);
 
