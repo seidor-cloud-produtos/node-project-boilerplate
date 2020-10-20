@@ -177,3 +177,22 @@ testBD('User Update Not Found', async t => {
 
     t.falsy(updated);
 });
+
+testBD('User Delete', async t => {
+    const data = new UserBuilder()
+        .withName('foo')
+        .withSurname('bar')
+        .withAge(42)
+        .build();
+
+    const created = await repository.create(data as UserInterface);
+    const response = await repository.remove(created.id!);
+
+    t.is(response.affected, 1);
+});
+
+testBD('User Delete Not Found', async t => {
+    const response = await repository.remove('55049aa3-8c0a-43c6-9453-09f6b9567f46');
+
+    t.is(response.affected, 0);
+});
