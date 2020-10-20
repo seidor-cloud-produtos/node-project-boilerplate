@@ -1,0 +1,71 @@
+{
+    "env": {
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "airbnb-base",
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint",
+        "plugin:prettier/recommended"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint",
+        "prettier"
+    ],
+    "rules": {
+        "no-await-in-loop": 0,
+        "no-use-before-define": 0,
+        "camelcase": 0,
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+        "import/prefer-default-export": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/naming-convention": [
+            "error",
+            {
+                "selector": "interface",
+                "format": [
+                    "PascalCase"
+                ]
+            }
+        ],
+        "prettier/prettier": "error",
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+              "ts": "never"
+            }
+        ],
+        "max-len": ["error",
+        {
+            "code": 100,
+            "ignoreStrings": true,
+            "ignoreTemplateLiterals": true
+        }]
+    },
+    "settings": {
+        "import/resolver": {
+            "typescript": {}
+        }
+    },
+    "overrides": [
+        {
+            "files": [
+                "src/tests/**/*.ts"
+            ],
+            "rules": {
+                "@typescript-eslint/no-explicit-any": 0
+            }
+        }
+    ]
+}
