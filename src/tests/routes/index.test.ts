@@ -4,6 +4,7 @@ import sinon from 'sinon';
 import express from 'express';
 
 import app from '../../app';
+import { swaggerSpec } from '../../swagger';
 import { HttpError } from '../../utils/errors/HttpError';
 
 const mockedTest = test;
@@ -38,4 +39,11 @@ mockedTest.serial('GET / http error throws', async t => {
 
     const res = await request(app).get('/');
     t.is(res.status, 400);
+});
+
+test('GET /api-docs', async t => {
+    const res = await request(app).get('/api-docs');
+    t.is(res.status, 200);
+    t.is(res.get('Content-Type'), 'application/json; charset=utf-8');
+    t.is(res.text, JSON.stringify(swaggerSpec));
 });
