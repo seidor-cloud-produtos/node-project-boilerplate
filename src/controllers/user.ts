@@ -2,7 +2,7 @@ import { User } from '../database/entities/User';
 import { UserInterface } from '../interfaces/user';
 import { HttpError } from '../utils/errors/HttpError';
 import * as repository from '../repositories/user';
-import { buildGetAllOptions } from '../utils/typeorm';
+import { buildGetAllOptions } from '../utils/builders/typeorm';
 
 export const create = async (data: UserInterface): Promise<UserInterface> => {
     return repository.create(data);
@@ -26,7 +26,7 @@ export const update = async (
     data: Partial<UserInterface>,
     id: string,
 ): Promise<UserInterface | HttpError> => {
-    const user = repository.update(data, id);
+    const user = await repository.update(data, id);
 
     if (!user) throw new HttpError(404, 'User not found');
 

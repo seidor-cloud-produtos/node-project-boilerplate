@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import { buildGetAllOptions } from '../../../utils/typeorm';
+import { buildGetAllOptions } from '../../../utils/builders/typeorm';
 
 test('buildGetAllOptions default', t => {
     const options = buildGetAllOptions({});
