@@ -1,6 +1,8 @@
 import { Request, Response, Router } from 'express';
 
 import * as controller from '../controllers/user';
+import * as validator from '../utils/user/validators';
+import { getValidData } from '../utils/validation/validatonHandler';
 
 const router = Router();
 
@@ -80,9 +82,9 @@ const router = Router();
  *               $ref: '#/definitions/User'
  */
 
-router.post('/', async (req: Request, res: Response) => {
-    const data = req.body;
-    const user = await controller.create(data);
+router.post('/', validator.createValidators, async (req: Request, res: Response) => {
+    const { body } = getValidData(req);
+    const user = await controller.create(body);
 
     return res.status(201).send(user);
 });
@@ -119,11 +121,16 @@ router.post('/', async (req: Request, res: Response) => {
  *               $ref: '#/definitions/User'
  */
 
-router.put('/:id', async (req: Request, res: Response) => {
-    const result = await controller.update(req.body, req.params.id);
+router.put(
+    '/:id',
+    validator.updateValidators,
+    async (req: Request, res: Response) => {
+        const { body, params } = getValidData(req);
+        const result = await controller.update(body, params.id);
 
-    return res.status(200).send(result);
-});
+        return res.status(200).send(result);
+    },
+);
 
 /**
  * @swagger
@@ -148,11 +155,16 @@ router.put('/:id', async (req: Request, res: Response) => {
  *               $ref: '#/definitions/User'
  */
 
-router.get('/:id', async (req: Request, res: Response) => {
-    const user = await controller.getById(req.params.id);
+router.get(
+    '/:id',
+    validator.idParamValidator,
+    async (req: Request, res: Response) => {
+        const { params } = getValidData(req);
+        const user = await controller.getById(params.id);
 
-    return res.status(200).send(user);
-});
+        return res.status(200).send(user);
+    },
+);
 
 /**
  * @swagger
@@ -179,11 +191,13 @@ router.get('/:id', async (req: Request, res: Response) => {
  *               $ref: '#/definitions/User'
  */
 
-router.get('/', async (req: Request, res: Response) => {
-    const users = await controller.getAll(req.query);
+router.get('/', validator.getallValidator, async (req: Request, res: Response) => {
+    const { query } = getValidData(req);
+    const users = await controller.getAll(query);
 
     return res.status(200).json(users);
 });
+
 /**
  * @swagger
  * /api/user/:id:
@@ -210,10 +224,15 @@ router.get('/', async (req: Request, res: Response) => {
  *         description: Successful
  */
 
-router.delete('/:id', async (req: Request, res: Response) => {
-    await controller.remove(req.params.id);
+router.delete(
+    '/:id',
+    validator.idParamValidator,
+    async (req: Request, res: Response) => {
+        const { params } = getValidData(req);
+        await controller.remove(params.id);
 
-    return res.status(204).send();
-});
+        return res.status(204).send();
+    },
+);
 
 export default router;
