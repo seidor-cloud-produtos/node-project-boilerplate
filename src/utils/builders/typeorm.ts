@@ -1,7 +1,7 @@
 import { FindManyOptions } from 'typeorm';
 
 export const buildGetAllOptions = (params: {
-    [key: string]: string;
+    [key: string]: unknown;
 }): FindManyOptions => {
     const size = params.size || 20;
     const page = params.page || 1;

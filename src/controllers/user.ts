@@ -16,7 +16,9 @@ export const getById = async (id: string): Promise<User | HttpError> => {
     return user;
 };
 
-export const getAll = async (params: { [key: string]: string }) => {
+export const getAll = async (params: {
+    [key: string]: unknown;
+}): Promise<{ data: UserInterface[]; count: number }> => {
     const options = buildGetAllOptions(params);
 
     return repository.getAll(options);
