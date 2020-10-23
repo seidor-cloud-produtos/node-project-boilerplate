@@ -7,11 +7,11 @@ import IBookRepository from '../interfaces/repositories/IBook';
 export default class BookController {
     constructor(
         @inject('BookRepository')
-        private book_repository: IBookRepository,
+        private bookRepository: IBookRepository,
     ) {}
 
     public async create(book_data: BookInterface): Promise<Book> {
-        const book_created = await this.book_repository.createAndSave(book_data);
+        const book_created = await this.bookRepository.createAndSave(book_data);
 
         return book_created;
     }
