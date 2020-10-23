@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import app from './app';
 
 import connect from './database/connection/connection';
