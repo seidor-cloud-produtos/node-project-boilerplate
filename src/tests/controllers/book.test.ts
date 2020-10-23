@@ -4,7 +4,7 @@ import sinon from 'sinon';
 
 import BookController from '../../controllers/book';
 import BookRepository from '../../repositories/book';
-import { BookInterface } from '../../interfaces/book';
+import Book from '../../database/schemas/Book';
 
 test('create', async t => {
     const data = {
@@ -15,7 +15,7 @@ test('create', async t => {
         name: 'Fake Name',
         subtitle: 'Fake Subtitle',
         updatedAt: new Date(),
-    } as BookInterface;
+    } as Book;
 
     const bookRepositoryStub = sinon.createStubInstance(BookRepository);
     bookRepositoryStub.createAndSave.returns(new Promise(resolve => resolve(data)));
