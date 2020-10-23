@@ -1,7 +1,7 @@
 import { ObjectID } from 'typeorm';
 
 export interface BookInterface {
-    _id: ObjectID;
+    _id?: ObjectID;
 
     name: string;
 
