@@ -8,6 +8,7 @@ import app from '../../app';
 import BookController from '../../controllers/book';
 import Book from '../../database/schemas/Book';
 import BookBuilder from '../testBuilders/bookBuilder';
+import { isParamsInValidationErrors } from '../../utils/validation/validationError';
 
 test('POST /api/book/', async t => {
     const data = new BookBuilder()
@@ -26,4 +27,19 @@ test('POST /api/book/', async t => {
 
     t.is(res.status, 201);
     t.true(bookControllerSpy.create.calledWith(data));
+});
+
+test('POST /api/book/ - BAD REQUEST NO VALUES', async t => {
+    const bookControllerSpy = sinon.createStubInstance(BookController);
+
+    const res = await request(app).post('/api/book');
+
+    t.is(res.status, 400);
+    t.true(
+        isParamsInValidationErrors(
+            ['name', 'genre', 'author', 'author'],
+            res.body.errors,
+        ),
+    );
+    t.true(bookControllerSpy.create.notCalled);
 });
