@@ -1,7 +1,6 @@
 import 'reflect-metadata';
 import test from 'ava';
 import sinon from 'sinon';
-import { container } from 'tsyringe';
 
 import BookController from '../../controllers/book';
 import BookRepository from '../../repositories/book';
