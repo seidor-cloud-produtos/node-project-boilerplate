@@ -43,3 +43,25 @@ test('POST /api/book/ - BAD REQUEST NO VALUES', async t => {
     );
     t.true(bookControllerSpy.create.notCalled);
 });
+
+test('POST /api/book/ - BAD REQUEST WRONG VALUES', async t => {
+    const data = new BookBuilder()
+        .withName(1 as any)
+        .withAuthor(1 as any)
+        .withGenre(1 as any)
+        .withSubtitle(1 as any)
+        .build() as Book;
+
+    const bookControllerSpy = sinon.createStubInstance(BookController);
+
+    const res = await request(app).post('/api/book').send(data);
+
+    t.is(res.status, 400);
+    t.true(
+        isParamsInValidationErrors(
+            ['name', 'genre', 'author', 'author'],
+            res.body.errors,
+        ),
+    );
+    t.true(bookControllerSpy.create.notCalled);
+});
