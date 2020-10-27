@@ -35,12 +35,7 @@ test('POST /api/book/ - BAD REQUEST NO VALUES', async t => {
     const res = await request(app).post('/api/book');
 
     t.is(res.status, 400);
-    t.true(
-        isParamsInValidationErrors(
-            ['name', 'genre', 'author', 'author'],
-            res.body.errors,
-        ),
-    );
+
     t.true(bookControllerSpy.create.notCalled);
 });
 
@@ -57,11 +52,6 @@ test('POST /api/book/ - BAD REQUEST WRONG VALUES', async t => {
     const res = await request(app).post('/api/book').send(data);
 
     t.is(res.status, 400);
-    t.true(
-        isParamsInValidationErrors(
-            ['name', 'genre', 'author', 'author'],
-            res.body.errors,
-        ),
-    );
+
     t.true(bookControllerSpy.create.notCalled);
 });
