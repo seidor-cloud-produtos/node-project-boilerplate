@@ -1,8 +1,11 @@
-import { body } from 'express-validator';
+import * as yup from 'yup';
 
-export const createValidators = [
-    body('author').isString(),
-    body('genre').isString(),
-    body('name').isString(),
-    body('subtitle').isString(),
-];
+export const userSchema = yup.object().shape({
+    author: yup.string().strict(true).required('The property author is required'),
+    genre: yup.string().strict(true).required('The property genre is required'),
+    name: yup.string().strict(true).required('The property name is required'),
+    subtitle: yup
+        .string()
+        .strict(true)
+        .required('The property subtitle is required'),
+});
