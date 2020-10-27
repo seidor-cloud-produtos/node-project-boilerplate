@@ -4,6 +4,7 @@
     "description": "NodeJS project boilerplate",
     "main": "dist/server.js",
     "scripts": {
+        "test:jest": "jest",
         "test": "ava",
         "build": "tsc",
         "start": "node dist/server.js",
