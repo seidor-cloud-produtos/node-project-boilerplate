@@ -9,6 +9,7 @@ require('express-async-errors');
 
 import routes from './routes'
 import { HttpError } from './utils/errors/HttpError';
+import { ValidateError } from './utils/errors/ValidateError';
 
 class App {
     public app: express.Application;
@@ -30,7 +31,7 @@ class App {
     }
 
     private static errorHandling(
-        error: Error | HttpError,
+        error: Error | HttpError | ValidateError,
         req: Request,
         res: Response,
         next: NextFunction,
@@ -38,7 +39,7 @@ class App {
         const { code, message, errors } = <any>error;
 
         const apiError = {
-            code: <any>error instanceof HttpError ? code : 500,
+            code: <any>error instanceof HttpError || <any>error instanceof ValidateError ? code : 500,
             message,
             errors,
         };
