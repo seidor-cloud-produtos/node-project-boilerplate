@@ -7,11 +7,11 @@ import { getValidData } from '../utils/validation/validatonHandler';
 const router = Router();
 
 router.post('/', validateUserDataMiddleware, async (req: Request, res: Response) => {
-    const { body } = getValidData(req);
+    const book_data = req.body;
 
     const bookController = container.resolve(BookController);
 
-    const book_response = await bookController.create(body);
+    const book_response = await bookController.create(book_data);
 
     return res.status(201).send(book_response);
 });
