@@ -2,7 +2,6 @@ import { Request, Response, Router } from 'express';
 import { container } from 'tsyringe';
 import BookController from '../controllers/book';
 import validateUserDataMiddleware from '../utils/book/middleware/validateBookData';
-import { getValidData } from '../utils/validation/validatonHandler';
 
 const router = Router();
 

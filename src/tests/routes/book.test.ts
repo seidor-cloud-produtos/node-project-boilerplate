@@ -8,7 +8,6 @@ import app from '../../app';
 import BookController from '../../controllers/book';
 import Book from '../../database/schemas/Book';
 import BookBuilder from '../testBuilders/bookBuilder';
-import { isParamsInValidationErrors } from '../../utils/validation/validationError';
 
 test('POST /api/book/', async t => {
     const data = new BookBuilder()
