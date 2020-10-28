@@ -10,6 +10,7 @@ require('express-async-errors');
 import routes from './routes'
 import { HttpError } from './utils/errors/HttpError';
 import { ValidateError } from './utils/errors/ValidateError';
+import logger from './middlewares/logger';
 
 class App {
     public app: express.Application;
@@ -25,6 +26,7 @@ class App {
         this.app.use(cors());
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(logger);
         this.app.use(routes);
         this.app.use(App.errorHandling);
         this.app.disable('x-powered-by');
