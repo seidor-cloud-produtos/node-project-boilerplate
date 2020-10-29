@@ -92,6 +92,7 @@
         "silent": true,
         "run": [
             "test",
+            "test:jest",
             "build"
         ]
     }
