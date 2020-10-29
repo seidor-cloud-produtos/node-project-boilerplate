@@ -8,7 +8,9 @@ export default async function logger(
     response: Response,
     next: NextFunction,
 ): Promise<void> {
-    log(request, response);
+    if (process.env.CURRENT_ENVIROMENT !== 'DEV') {
+        log(request, response);
+    }
 
     return next();
 }
