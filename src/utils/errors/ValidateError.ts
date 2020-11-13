@@ -1,22 +1,15 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import * as yup from 'yup';
 
 import { HttpError } from './HttpError';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export class ValidateError extends HttpError {
-    code: number;
+    errors: { property: string; message: string }[];
 
-    errors: string[];
+    constructor(error: yup.ValidationError) {
+        super(400, 'Validation Error');
 
-    propertiesWithError: string[];
-
-    constructor(code: number, error: any, message: string) {
-        super(code, message);
-        this.code = code;
-
-        this.errors = error.errors;
-        this.propertiesWithError = error.inner.map(
-            (item: { path: any }) => item.path,
-        );
+        this.errors = error.inner.map(err => {
+            return { property: err.path, message: err.type };
+        });
     }
 }

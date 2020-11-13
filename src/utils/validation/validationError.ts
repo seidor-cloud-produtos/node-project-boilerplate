@@ -32,6 +32,6 @@ export const validateSchemaData = async <T>(
     try {
         await schema.validate(data, { abortEarly: false });
     } catch (err) {
-        throw new ValidateError(400, err, 'Validate error');
+        throw new ValidateError(err);
     }
 };
