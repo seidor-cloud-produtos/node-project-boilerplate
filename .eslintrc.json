@@ -23,6 +23,8 @@
         "prettier"
     ],
     "rules": {
+        "no-underscore-dangle": "off",
+        "no-useless-constructor": "off",
         "no-await-in-loop": 0,
         "no-use-before-define": 0,
         "camelcase": 0,

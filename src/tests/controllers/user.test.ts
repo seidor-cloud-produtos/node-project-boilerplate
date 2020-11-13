@@ -6,7 +6,7 @@ import * as repository from '../../repositories/user';
 import * as builder from '../../utils/builders/typeorm';
 import { UserInterface } from '../../interfaces/user';
 
-test.afterEach.always(t => {
+test.afterEach.always(() => {
     sinon.restore();
 });
 

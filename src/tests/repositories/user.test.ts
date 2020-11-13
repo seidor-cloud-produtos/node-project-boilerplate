@@ -56,34 +56,6 @@ testBD('User Create without Email', async t => {
     t.context.removable.push(created);
 });
 
-testBD('User Create Error Required Fields', async t => {
-    const promises = [];
-    const builder = new UserBuilder();
-
-    let data = builder.build();
-    promises.push(
-        t.throwsAsync(repository.create(data as UserInterface), {
-            message: 'null value in column "name" violates not-null constraint',
-        }),
-    );
-
-    data = builder.withName('foo').build();
-    promises.push(
-        t.throwsAsync(repository.create(data as UserInterface), {
-            message: 'null value in column "surname" violates not-null constraint',
-        }),
-    );
-
-    data = builder.withName('foo').withSurname('bar').build();
-    promises.push(
-        t.throwsAsync(repository.create(data as UserInterface), {
-            message: 'null value in column "age" violates not-null constraint',
-        }),
-    );
-
-    await Promise.all(promises);
-});
-
 testBD('User GetById', async t => {
     const data = new UserBuilder()
         .withName('foo')
