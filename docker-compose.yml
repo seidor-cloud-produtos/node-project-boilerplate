@@ -6,19 +6,23 @@ services:
             context: .
             dockerfile: Dockerfile
             target: builder
-        command: "npm run dev"
+        command: 'npm run dev'
         ports:
-            - "3000:3000"
+            - '3000:3000'
         volumes:
             - .:/usr/app
         environment:
             DB_HOST: db
-            DB_PORT: genericservice
+            DB_PORT: 5432
             DB_USER: postgres
             DB_PASSWORD: postgres
             DB_NAME: genericservice
+            MONGO_HOST: mongo
+            MONGO_PORT: 27017
+            MONGO_DBNAME: genericservice
         depends_on:
             - db
+            - mongo
     db:
         image: postgres:13-alpine
         restart: always
@@ -28,7 +32,18 @@ services:
         volumes:
             - pgdata:/var/lib/postgresql/data
         ports:
-            - "5432:5432"
-
+            - '5432:5432'
+    mongo:
+        image: mongo:latest
+        ports:
+            - '27017:27017'
+        environment:
+            MONGO_HOST: mongo
+            MONGO_PORT: 27017
+            MONGO_DBNAME: genericservice
+        container_name: mongo
+        volumes:
+            - mongodata:/data/mongo
 volumes:
     pgdata:
+    mongodata:
