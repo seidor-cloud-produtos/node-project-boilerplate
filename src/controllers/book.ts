@@ -1,18 +1,20 @@
-import { inject, injectable } from 'tsyringe';
-import Book from '../database/schemas/Book';
-import { BookInterface } from '../interfaces/book';
-import IBookRepository from '../interfaces/repositories/IBook';
+import { Response, Request } from 'express';
+import { container } from 'tsyringe';
 
-@injectable()
+import BookService from '../services/book';
+
 export default class BookController {
-    constructor(
-        @inject('BookRepository')
-        private bookRepository: IBookRepository,
-    ) {}
+    bookService: BookService;
 
-    public async create(book_data: BookInterface): Promise<Book> {
-        const book_created = await this.bookRepository.createAndSave(book_data);
+    constructor() {
+        this.bookService = container.resolve(BookService);
+    }
 
-        return book_created;
+    public async create(request: Request, response: Response): Promise<Response> {
+        const book_data = request.body;
+
+        const book_response = await this.bookService.create(book_data);
+
+        return response.status(201).json(book_response);
     }
 }
