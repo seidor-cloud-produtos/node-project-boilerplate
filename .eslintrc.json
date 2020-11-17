@@ -27,7 +27,6 @@
         "no-useless-constructor": "off",
         "no-await-in-loop": 0,
         "no-use-before-define": 0,
-        "class-methods-use-this": "off",
         "camelcase": 0,
         "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
         "import/prefer-default-export": "off",

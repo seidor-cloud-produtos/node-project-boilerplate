@@ -87,13 +87,5 @@
         "require": [
             "ts-node/register"
         ]
-    },
-    "pre-push": {
-        "silent": true,
-        "run": [
-            "test",
-            "test:jest",
-            "build"
-        ]
     }
 }
