@@ -1,8 +1,8 @@
 import { Request, Response, Router } from 'express';
 
 import { swaggerSpec } from '../swagger';
-import apiUser from './user';
-import apiBook from './book';
+import apiUser from './user.routes';
+import apiBook from './book.routes';
 
 const router = Router();
 
