@@ -88,5 +88,11 @@
         "require": [
             "ts-node/register"
         ]
+    },
+    "pre-push": {
+        "silent": true,
+        "run": [
+            "build"
+        ]
     }
 }
