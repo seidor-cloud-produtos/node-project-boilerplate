@@ -2,6 +2,8 @@ up:
 	docker-compose up
 upd:
 	docker-compose up -d
+updb:
+	docker-compose up -d db mongo
 down:
 	docker-compose down
 logs:
