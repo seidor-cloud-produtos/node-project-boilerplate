@@ -3,18 +3,11 @@ import { container } from 'tsyringe';
 
 import BookService from '../services/book';
 
-export default class BookController {
-    bookService: BookService;
+export const create = async (req: Request, res: Response): Promise<Response> => {
+    const bookData = req.body;
 
-    constructor() {
-        this.bookService = container.resolve(BookService);
-    }
+    const bookService = container.resolve(BookService);
+    const response = await bookService.create(bookData);
 
-    public async create(request: Request, response: Response): Promise<Response> {
-        const book_data = request.body;
-
-        const book_response = await this.bookService.create(book_data);
-
-        return response.status(201).json(book_response);
-    }
-}
+    return res.status(201).json(response);
+};

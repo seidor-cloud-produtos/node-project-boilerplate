@@ -10,7 +10,7 @@ require('express-async-errors');
 import routes from './routes'
 import { HttpError } from './utils/errors/HttpError';
 import { ValidateError } from './utils/errors/ValidateError';
-import logger from './middlewares/logger';
+import logger from './utils/middleware/logger';
 
 class App {
     public app: express.Application;

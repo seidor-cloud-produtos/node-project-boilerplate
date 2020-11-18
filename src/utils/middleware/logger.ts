@@ -4,12 +4,12 @@ import pino from 'pino-http';
 const log = pino();
 
 export default async function logger(
-    request: Request,
-    response: Response,
+    req: Request,
+    res: Response,
     next: NextFunction,
 ): Promise<void> {
-    if (process.env.CURRENT_ENVIROMENT !== 'DEV') {
-        log(request, response);
+    if (process.env.NODE_ENV === 'production') {
+        log(req, res);
     }
 
     return next();
