@@ -8,7 +8,7 @@ export default async function logger(
     res: Response,
     next: NextFunction,
 ): Promise<void> {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV === 'production') {
         log(req, res);
     }
 
