@@ -1,15 +1,16 @@
 # node-project-boilerplate
 
-Boilerplate of a NodeJS project using our latest patterns
+Boilerplate of a NodeJS project using our latest patterns.
 
 ## technologies
 
 -   typescript
 -   typeorm
 -   postgres
+-   mongodb
 -   express
--   express-validator (validação das rotas)
--   AVA (tests)
+-   yup
+-   jest
 
 ## scripts
 
@@ -20,6 +21,7 @@ Boilerplate of a NodeJS project using our latest patterns
 -   typeorm - same as npx typeorm
 -   m:run - run migrations
 -   m:generate - generate a migration
+-   clean-database - drop database and run migrations
 
 ## docker support
 
@@ -38,3 +40,32 @@ make down
 ```
 
 See Makefile for aditional commands.
+
+## run tests
+
+```shell
+make test
+```
+
+or a more manual approach. Create .env file with this contents:
+
+```text
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_NAME=genericservice
+
+MONGO_HOST=localhost
+MONGO_PORT=27107
+MONGO_DBNAME=genericservice
+```
+
+Then run:
+
+```shell
+make updb
+npm test
+```
+
+
