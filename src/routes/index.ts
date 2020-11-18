@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 
 import { swaggerSpec } from '../swagger';
-import apiBook from './book';
+import apiBook from './book.routes';
 
 const router = Router();
 

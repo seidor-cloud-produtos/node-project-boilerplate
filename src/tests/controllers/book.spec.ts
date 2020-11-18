@@ -1,42 +1,60 @@
 import sinon from 'sinon';
-import BookController from '../../controllers/book';
+import request from 'supertest';
+import { container } from 'tsyringe';
+
+import app from '../../app';
+import BookService from '../../services/book';
 import Book from '../../database/schemas/Book';
-import { BookInterface } from '../../interfaces/book';
-import BookRepository from '../../repositories/book';
 import BookBuilder from '../testBuilders/bookBuilder';
 
-describe('Book Controller context', () => {
-    let bookController: BookController;
-    let bookRepositorySpy: sinon.SinonStubbedInstance<BookRepository>;
+describe('Book Route context', () => {
+    let bookServiceSpy: sinon.SinonStubbedInstance<BookService>;
 
     beforeEach(() => {
         sinon.restore();
-        bookRepositorySpy = sinon.createStubInstance(BookRepository);
-        bookController = new BookController(bookRepositorySpy);
+        bookServiceSpy = sinon.createStubInstance(BookService);
     });
 
-    it('Should be able to call repository with data of book', async () => {
-        const book_data = new BookBuilder()
-            .withAuthor('John Doe')
-            .withGenre('Autobiography')
+    it('should be call controller with book data and returns status 201', async () => {
+        const bookData = new BookBuilder()
             .withName('John Doe Biography')
-            .withSubtitle(`John Doe's life and death`)
-            .build();
+            .withAuthor('John Doe')
+            .withGenre('Comedy')
+            .withSubtitle('Auto Biography')
+            .build() as Book;
 
-        bookRepositorySpy.createAndSave.returns(
-            new Promise(resolve => resolve(book_data as Book)),
-        );
+        bookServiceSpy.create.resolves(<any>bookData);
+        sinon.stub(container, 'resolve').returns(bookServiceSpy);
 
-        const book_controller_response = await bookController.create(
-            book_data as BookInterface,
-        );
+        const res = await request(app).post('/api/book').send(bookData);
 
-        expect(
-            bookRepositorySpy.createAndSave.calledWithExactly(
-                book_data as BookInterface,
-            ),
-        ).toBeTruthy();
+        expect(res.status).toBe(201);
+        expect(res.body).toStrictEqual(bookData);
+        expect(bookServiceSpy.create.calledWithExactly(bookData)).toBeTruthy();
+    });
 
-        expect(book_controller_response).toEqual(book_data);
+    it('should be return status 400 when not send params', async () => {
+        sinon.stub(container, 'resolve').returns(bookServiceSpy);
+
+        const res = await request(app).post('/api/book');
+
+        expect(res.status).toBe(400);
+        expect(bookServiceSpy.create.notCalled).toBeTruthy();
+    });
+
+    it('should be return status 400 when send invalid params', async () => {
+        const bookData = new BookBuilder()
+            .withName(1 as any)
+            .withAuthor(1 as any)
+            .withGenre(1 as any)
+            .withSubtitle(1 as any)
+            .build() as Book;
+
+        sinon.stub(container, 'resolve').returns(bookServiceSpy);
+
+        const res = await request(app).post('/api/book').send(bookData);
+
+        expect(res.status).toBe(400);
+        expect(bookServiceSpy.create.notCalled).toBeTruthy();
     });
 });
