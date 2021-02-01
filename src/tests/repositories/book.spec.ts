@@ -7,7 +7,7 @@ describe('Book Repository context', () => {
     let bookRepository: BookRepository;
 
     beforeEach(async () => {
-        await connect();
+        await connect(true);
         bookRepository = new BookRepository();
     });
 

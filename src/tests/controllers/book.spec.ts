@@ -4,7 +4,7 @@ import { container } from 'tsyringe';
 
 import app from '../../app';
 import BookService from '../../services/book';
-import Book from '../../database/schemas/Book';
+import Book from '../../database/entities/Book';
 import BookBuilder from '../testBuilders/bookBuilder';
 
 describe('Book Route context', () => {

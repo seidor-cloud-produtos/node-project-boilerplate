@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import Book from '../database/schemas/Book';
+import Book from '../database/entities/Book';
 
 import { BookInterface } from '../interfaces/book';
 import IBookRepository from '../interfaces/repositories/IBook';
