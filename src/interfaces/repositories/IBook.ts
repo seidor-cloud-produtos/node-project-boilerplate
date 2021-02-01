@@ -1,4 +1,4 @@
-import Book from '../../database/entities/Book';
+import Book from '../../database/schemas/Book';
 import { BookInterface } from '../book';
 
 export default interface IBookRepository {
