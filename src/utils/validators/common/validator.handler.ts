@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { validationResult, matchedData } from 'express-validator';
 
-import { ValidatorError } from '../errors/ValidationError';
+import { ValidatorError } from '../../errors/ValidationError';
 
 export const throwsIfNotValid = (req: Request): void => {
     const errors = validationResult(req);

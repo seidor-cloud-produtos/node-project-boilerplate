@@ -1,7 +1,7 @@
 import { Response, Request, NextFunction, RequestHandler } from 'express';
 import * as yup from 'yup';
 
-import { validateSchemaData } from '../validation/validationError';
+import { validateSchemaData } from '../validators/common/validator.error';
 
 export default function validatorMiddleware(schemas: {
     body?: yup.ObjectSchema;
