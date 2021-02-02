@@ -1,3 +1,4 @@
+import { getConnection } from 'typeorm';
 import BookRepository from '../../repositories/book';
 import connect from '../../database/connection/connection';
 import BookBuilder from '../testBuilders/bookBuilder';
@@ -11,7 +12,12 @@ describe('Book Repository context', () => {
         bookRepository = new BookRepository();
     });
 
-    it('should be able to insert a new book', async () => {
+    afterAll(done => {
+        getConnection().close();
+        done();
+    });
+
+    it('should be able to insert a new book', async done => {
         const book_data = new BookBuilder()
             .withAuthor('John Doe')
             .withGenre('Autobiography')
@@ -32,5 +38,6 @@ describe('Book Repository context', () => {
         expect(name).toBe(book_data.name);
         expect(subtitle).toBe(book_data.subtitle);
         expect(_id).not.toBeUndefined();
+        done();
     });
 });
