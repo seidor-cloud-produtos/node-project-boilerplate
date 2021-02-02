@@ -12,14 +12,14 @@ services:
         volumes:
             - .:/usr/app
         environment:
-            DB_HOST: db
-            DB_PORT: 5432
-            DB_USER: postgres
-            DB_PASSWORD: postgres
-            DB_NAME: genericservice
-            MONGO_HOST: mongo
-            MONGO_PORT: 27017
-            MONGO_DBNAME: genericservice
+            DB_HOST: ${DB_HOST}
+            DB_PORT: ${DB_PORT} #5432
+            DB_USER: ${DB_USER}
+            DB_PASSWORD: ${DB_PASSWORD}
+            DB_NAME: ${DB_NAME}
+            MONGO_HOST: ${MONGO_HOST}
+            MONGO_PORT: ${MONGO_PORT} #27017
+            MONGO_DBNAME: ${MONGO_DBNAME}
         depends_on:
             - db
             - mongo
@@ -27,8 +27,8 @@ services:
         image: postgres:13-alpine
         restart: always
         environment:
-            POSTGRES_PASSWORD: postgres
-            POSTGRES_DB: genericservice
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_NAME}
         volumes:
             - pgdata:/var/lib/postgresql/data
         ports:
@@ -38,9 +38,9 @@ services:
         ports:
             - '27017:27017'
         environment:
-            MONGO_HOST: mongo
-            MONGO_PORT: 27017
-            MONGO_DBNAME: genericservice
+            MONGO_HOST: ${MONGO_HOST}
+            MONGO_PORT: ${MONGO_PORT}
+            MONGO_DBNAME: ${MONGO_DBNAME}
         container_name: mongo
         volumes:
             - mongodata:/data/mongo

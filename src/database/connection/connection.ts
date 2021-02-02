@@ -5,15 +5,43 @@ import { createConnections, Connection } from 'typeorm';
 
 dotenv.config();
 
-export default async (): Promise<Connection[]> => {
-    let mongo_port = Number(process.env.MONGO_PORT);
-    let mongo_database = process.env.MONGO_DBNAME;
+export default async (isTesting = false): Promise<Connection[]> => {
+    let mongoPort = Number(process.env.MONGO_PORT);
+    let mongoDatabase = process.env.MONGO_DBNAME;
 
-    if (process.env.CURRENT_ENVIROMENT === 'DEV') {
+    if (process.env.CURRENT_ENVIROMENT === 'DEV' || isTesting) {
         const mongo_data = new MongoMemoryServer();
 
-        mongo_port = await mongo_data.getPort();
-        mongo_database = await mongo_data.getDbName();
+        mongoPort = await mongo_data.getPort();
+        mongoDatabase = await mongo_data.getDbName();
+    }
+
+    if (isTesting) {
+        const connections = await createConnections([
+            {
+                name: 'default',
+                type: 'sqlite',
+                database: ':memory:',
+                migrationsRun: isTesting,
+                synchronize: isTesting,
+                entities: [`${path.resolve(__dirname, '../entities')}/*.{ts,js}`],
+            },
+            {
+                name: 'mongo',
+                type: 'mongodb',
+                host: '127.0.0.1',
+                port: +mongoPort!,
+                database: mongoDatabase,
+                useUnifiedTopology: true,
+                entities: [`${path.resolve(__dirname, '../schemas')}/*.{ts,js}`],
+            },
+        ]);
+
+        for (let index = 0; index < connections.length; index += 1) {
+            await connections[index].runMigrations();
+        }
+
+        return connections;
     }
 
     return createConnections([
@@ -31,10 +59,10 @@ export default async (): Promise<Connection[]> => {
             name: 'mongo',
             type: 'mongodb',
             host: process.env.MONGO_HOST,
-            port: +mongo_port!,
-            database: mongo_database,
+            port: mongoPort,
+            database: mongoDatabase,
             useUnifiedTopology: true,
-            entities: [`${path.resolve(__dirname, '../schemas')}/*.{ts,js}`],
+            entities: [`${path.resolve(__dirname, '../entities')}/*.{ts,js}`],
         },
     ]);
 };
