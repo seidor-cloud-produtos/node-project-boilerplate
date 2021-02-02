@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ValidationError } from 'express-validator/src/base';
 import * as yup from 'yup';
-import { ValidateError } from '../errors/ValidateError';
+import { ValidateError } from '../../errors/ValidateError';
 
 const extractErrors = (validationErrors: ValidationError[]) => {
     let paramsErrors = validationErrors.map(error => error.param);

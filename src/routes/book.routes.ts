@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import * as BookController from '../controllers/book';
-import { bookSchema } from '../utils/book/validators';
+import { bookSchema } from '../utils/validators/book/book.validator';
 import validatorMiddleware from '../utils/middleware/validator';
 
 const router = Router();
